@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todoapp.dao.UserLoggedInDao;
 import com.todoapp.dao.UserLoginDao;
+import com.todoapp.dao.UserRegisterDao;
+import com.todoapp.mapper.UserRegisterDaoToUser;
+import com.todoapp.model.User;
 import com.todoapp.security.TokenUtils;
+import com.todoapp.service.UserService;
 
 @RestController
 @RequestMapping(value="/api/users")
@@ -30,6 +34,10 @@ public class UserController {
 	private UserDetailsService userDetalsService;
 	@Autowired
 	TokenUtils tokenUtils;
+	@Autowired
+	UserService userService;
+	@Autowired
+	UserRegisterDaoToUser toUser;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	ResponseEntity<?> login(@RequestBody UserLoginDao userLoginDao) {
@@ -53,5 +61,22 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	ResponseEntity<?> register(@RequestBody UserRegisterDao userRegisterDao) {
+		System.out.println(userRegisterDao.getPassword());
+		System.out.println(userRegisterDao.getPasswordConfirm());
+		if(!userRegisterDao.getPassword().equals(userRegisterDao.getPasswordConfirm())) {
+			return new ResponseEntity<String>("PASSWORDS_DO_NOT_MATCH.", HttpStatus.BAD_REQUEST);
+		}
+		Boolean exists=userService.existsByUsername(userRegisterDao.getUsername());
+		if(exists) { 
+			return new ResponseEntity<String>("USER_WITH_GIVEN_USERNAME_ALREADY_EXISTS.", HttpStatus.CONFLICT); 
+		}
+			 
+		User user=toUser.convert(userRegisterDao);
+		user=userService.save(user);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 	
 }
