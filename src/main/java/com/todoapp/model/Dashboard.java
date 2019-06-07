@@ -3,6 +3,7 @@ package com.todoapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class Dashboard {
 	private String title;
 	@ManyToOne
 	private User user;
-	@OneToMany(mappedBy = "dashboard")
+	@OneToMany(mappedBy = "dashboard",cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<DashboardColumn> dashboardColumns=new ArrayList<>();
 	
 	public Dashboard() {

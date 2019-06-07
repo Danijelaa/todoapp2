@@ -20,7 +20,7 @@ public class DashboardToDashboardLightDto implements Converter<Dashboard, Dashbo
 		return dashboardLightDto;
 	}
 	
-	List<DashboardLightDto> convert(List<Dashboard> dashboards){
+	public List<DashboardLightDto> convert(List<Dashboard> dashboards){
 		List<DashboardLightDto> dashboardLightDtos=new ArrayList<DashboardLightDto>();
 		for(Dashboard d:dashboards) {
 			dashboardLightDtos.add(convert(d));
