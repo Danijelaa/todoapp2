@@ -65,7 +65,7 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-	ResponseEntity<?> create(HttpServletRequest request, @RequestBody DashboardLightDto dashboardLightDto, @PathVariable Long id) {
+	ResponseEntity<?> update(HttpServletRequest request, @RequestBody DashboardLightDto dashboardLightDto, @PathVariable Long id) {
 		if(!id.equals(dashboardLightDto.getId())) {
 			return new ResponseEntity<>("IDS_DO_NOT_MATCH.", HttpStatus.BAD_REQUEST);
 		}
