@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todoapp.dto.DashboardColumnLightDto;
 import com.todoapp.dto.DashboardDto;
 import com.todoapp.dto.DashboardLightDto;
+import com.todoapp.mapper.DashboardColumnToDashboardColumnLightDto;
 import com.todoapp.mapper.DashboardToDashboardDto;
 import com.todoapp.mapper.DashboardToDashboardLightDto;
 import com.todoapp.model.Dashboard;
+import com.todoapp.model.DashboardColumn;
+import com.todoapp.service.DashboardColumnService;
 import com.todoapp.service.DashboardService;
 import com.todoapp.service.UserService;
 
@@ -33,6 +37,10 @@ public class DashboardController {
 	DashboardToDashboardLightDto toDashboardLightDto;
 	@Autowired
 	UserService userService;
+	@Autowired
+	DashboardColumnService dashboardColumnService;
+	@Autowired
+	DashboardColumnToDashboardColumnLightDto toDashboardColumnLightDto;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	ResponseEntity<List<DashboardLightDto>> findByUser(HttpServletRequest request) {
@@ -74,6 +82,14 @@ public class DashboardController {
 		dashboard.setTitle(dashboardLightDto.getTitle());
 		dashboard=dashboardService.save(dashboard);
 		return new ResponseEntity<DashboardDto>(toDashboardDto.convert(dashboard), HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}/dashboard-columns")
+	ResponseEntity<List<DashboardColumnLightDto>> findDashboardColumns(HttpServletRequest request, @PathVariable Long id) {
+		Dashboard dashboard=dashboardService.findById(id);
+		dashboardService.checkUserAuth(dashboard, userService.findUsernameFromPrincipal(request));
+		List<DashboardColumn> dashboardColumns=dashboardColumnService.findByDashboardId(id);
+		return new ResponseEntity<List<DashboardColumnLightDto>>(toDashboardColumnLightDto.convert(dashboardColumns), HttpStatus.OK);
 	}
 	
 }

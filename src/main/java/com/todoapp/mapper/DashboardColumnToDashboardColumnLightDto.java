@@ -20,7 +20,7 @@ public class DashboardColumnToDashboardColumnLightDto implements Converter<Dashb
 		return dashboardColumnLightDto;
 	}
 	
-	List<DashboardColumnLightDto> convert(List<DashboardColumn> dashboardColumns){
+	public List<DashboardColumnLightDto> convert(List<DashboardColumn> dashboardColumns){
 		List<DashboardColumnLightDto> dashboardColumnDtos=new ArrayList<DashboardColumnLightDto>();
 		for(DashboardColumn dc:dashboardColumns) {
 			dashboardColumnDtos.add(convert(dc));
