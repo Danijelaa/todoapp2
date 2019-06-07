@@ -1,8 +1,14 @@
 package com.todoapp.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class DashboardColumnCreateDto {
 
+	@NotNull
+	@Size(min = 1, max = 50)
 	private String title;
+	@NotNull
 	private Long dashboardId;
 	
 	public DashboardColumnCreateDto() {

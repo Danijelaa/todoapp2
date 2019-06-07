@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +65,7 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<?> create(HttpServletRequest request, @RequestBody DashboardLightDto dashboardLightDto) {
+	ResponseEntity<?> create(HttpServletRequest request, @Validated @RequestBody DashboardLightDto dashboardLightDto) {
 		Dashboard dashboard=new Dashboard();
 		dashboard.setTitle(dashboardLightDto.getTitle());
 		dashboard.setUser(userService.findByUsername(userService.findUsernameFromPrincipal(request)));
@@ -73,7 +74,7 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-	ResponseEntity<?> update(HttpServletRequest request, @RequestBody DashboardLightDto dashboardLightDto, @PathVariable Long id) {
+	ResponseEntity<?> update(HttpServletRequest request, @Validated @RequestBody DashboardLightDto dashboardLightDto, @PathVariable Long id) {
 		if(!id.equals(dashboardLightDto.getId())) {
 			return new ResponseEntity<>("IDS_DO_NOT_MATCH.", HttpStatus.BAD_REQUEST);
 		}

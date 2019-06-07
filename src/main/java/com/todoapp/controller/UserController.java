@@ -1,7 +1,5 @@
 package com.todoapp.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +21,6 @@ import com.todoapp.dto.UserLoggedInDto;
 import com.todoapp.dto.UserLoginDto;
 import com.todoapp.dto.UserRegisterDto;
 import com.todoapp.mapper.UserRegisterDaoToUser;
-import com.todoapp.model.Task;
 import com.todoapp.model.User;
 import com.todoapp.security.TokenUtils;
 import com.todoapp.service.TaskService;
@@ -68,7 +66,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	ResponseEntity<?> register(@RequestBody UserRegisterDto userRegisterDao) {
+	ResponseEntity<?> register(@Validated @RequestBody UserRegisterDto userRegisterDao) {
 		if(!userRegisterDao.getPassword().equals(userRegisterDao.getPasswordConfirm())) {
 			return new ResponseEntity<String>("PASSWORDS_DO_NOT_MATCH.", HttpStatus.BAD_REQUEST);
 		}

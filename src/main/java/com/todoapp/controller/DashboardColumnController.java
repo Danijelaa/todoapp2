@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,7 +64,7 @@ public class DashboardColumnController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<?> create(HttpServletRequest request, @RequestBody DashboardColumnCreateDto dashboardColumnLightDto) {
+	ResponseEntity<?> create(HttpServletRequest request, @Validated @RequestBody DashboardColumnCreateDto dashboardColumnLightDto) {
 		Dashboard dashboard=dashboardService.findById(dashboardColumnLightDto.getDashboardId());
 		dashboardService.checkUserAuth(dashboard, userService.findUsernameFromPrincipal(request));
 		DashboardColumn dashboardColumn=new DashboardColumn();
@@ -74,7 +75,7 @@ public class DashboardColumnController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	ResponseEntity<?> update(HttpServletRequest request, @PathVariable Long id, @RequestBody DashboardColumnLightDto dashboardColumnLightDto) {
+	ResponseEntity<?> update(HttpServletRequest request, @PathVariable Long id, @Validated @RequestBody DashboardColumnLightDto dashboardColumnLightDto) {
 		if(!id.equals(dashboardColumnLightDto.getId())) {
 			return new ResponseEntity<>("IDS_DO_NOT_MATCH.", HttpStatus.BAD_REQUEST);
 		}

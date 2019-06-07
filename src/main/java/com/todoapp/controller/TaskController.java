@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class TaskController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<TaskDto> create(HttpServletRequest request, @RequestBody TaskDto taskDto){
+	ResponseEntity<TaskDto> create(HttpServletRequest request, @Validated @RequestBody TaskDto taskDto){
 		DashboardColumn dashboardColumn=dashboardColumnService.findById(taskDto.getDashboardColumnId());
 		dashboardColumnService.checkUserAuth(dashboardColumn, usersErvice.findUsernameFromPrincipal(request));
 		Task task=new Task();
@@ -60,7 +61,7 @@ public class TaskController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-	ResponseEntity<?> update(HttpServletRequest request, @PathVariable Long id, @RequestBody TaskDto taskDto){
+	ResponseEntity<?> update(HttpServletRequest request, @PathVariable Long id, @Validated @RequestBody TaskDto taskDto){
 		if(!id.equals(taskDto.getId())) {
 			return new ResponseEntity<>("IDS_DO_NOT_MATCH.", HttpStatus.BAD_REQUEST);
 		}
