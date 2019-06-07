@@ -1,10 +1,10 @@
-package com.todoapp.dao;
+package com.todoapp.dto;
 
-public class UserRegisterDao extends UserLoginDao{
+public class UserRegisterDto extends UserLoginDto{
 
 	private String passwordConfirm;
 
-	public UserRegisterDao() {
+	public UserRegisterDto() {
 		super();
 	}
 

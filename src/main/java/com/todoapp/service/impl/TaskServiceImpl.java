@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.todoapp.exception.NotFoundException;
+import com.todoapp.exception.UnauthorizedException;
 import com.todoapp.model.Task;
 import com.todoapp.repository.TaskRepository;
 import com.todoapp.service.TaskService;
@@ -18,7 +19,7 @@ public class TaskServiceImpl implements TaskService{
 	
 	@Override
 	public Task findById(Long id) {
-		return taskRepository.findById(id).orElseThrow(() -> new NotFoundException("TEAM_DOES_NOT_EXIST"));
+		return taskRepository.findById(id).orElseThrow(() -> new NotFoundException("TASK_DOES_NOT_EXIST"));
 	}
 
 	@Override
@@ -28,7 +29,6 @@ public class TaskServiceImpl implements TaskService{
 
 	@Override
 	public void delete(Long id) {
-		findById(id);
 		taskRepository.deleteById(id);
 	}
 
@@ -39,9 +39,14 @@ public class TaskServiceImpl implements TaskService{
 
 	@Override
 	public Task update(Task task) {
-		findById(task.getId());
-		
 		return taskRepository.save(task);
+	}
+
+	@Override
+	public void checkUserAuth(Task task, String username) {
+		if(!username.equals(task.getDashboardColumn().getDashboard().getUser().getUsername())) {
+			throw new UnauthorizedException("UNAUTHORIZED_OPERATION_ON_TASK.");
+		}
 	}
 
 }

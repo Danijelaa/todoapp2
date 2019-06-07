@@ -11,4 +11,5 @@ public interface TaskService {
 	void delete(Long id);
 	Task save(Task task);
 	Task update(Task task);
+	void checkUserAuth(Task task, String username);
 }

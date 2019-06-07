@@ -4,14 +4,14 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.todoapp.dao.UserRegisterDao;
+import com.todoapp.dto.UserRegisterDto;
 import com.todoapp.model.User;
 
 @Component
-public class UserRegisterDaoToUser implements Converter<UserRegisterDao, User>{
+public class UserRegisterDaoToUser implements Converter<UserRegisterDto, User>{
 
 	@Override
-	public User convert(UserRegisterDao userRegisterDao) {
+	public User convert(UserRegisterDto userRegisterDao) {
 		User user=new User();
 		user.setPassword(new BCryptPasswordEncoder().encode(userRegisterDao.getPassword()));
 		user.setUsername(userRegisterDao.getUsername());

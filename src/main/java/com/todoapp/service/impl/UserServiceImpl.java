@@ -1,5 +1,9 @@
 package com.todoapp.service.impl;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +33,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Boolean existsByUsername(String username) {
 		return userRepository.existsByUsername(username);
+	}
+
+	@Override
+	public String findUsernameFromPrincipal(HttpServletRequest request) {
+		Principal principal=request.getUserPrincipal();
+		return principal.getName();
 	}
 
 }

@@ -1,11 +1,11 @@
-package com.todoapp.dao;
+package com.todoapp.dto;
 
-public class UserLoginDao {
+public class UserLoginDto {
 
 	private String username;
 	private String password;
 	
-	public UserLoginDao() {
+	public UserLoginDto() {
 		super();
 	}
 
