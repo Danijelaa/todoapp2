@@ -69,8 +69,6 @@ public class UserController {
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	ResponseEntity<?> register(@RequestBody UserRegisterDto userRegisterDao) {
-		System.out.println(userRegisterDao.getPassword());
-		System.out.println(userRegisterDao.getPasswordConfirm());
 		if(!userRegisterDao.getPassword().equals(userRegisterDao.getPasswordConfirm())) {
 			return new ResponseEntity<String>("PASSWORDS_DO_NOT_MATCH.", HttpStatus.BAD_REQUEST);
 		}

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User {
@@ -16,9 +17,9 @@ public class User {
 	@GeneratedValue
 	@Column
 	private Long id;
-	@Column
+	@Column(nullable = false, unique = true)
 	private String username;
-	@Column
+	@Column(nullable = false)
 	private String password;
 	@OneToMany(mappedBy = "user")
 	private List<Dashboard> dashboards=new ArrayList<>();;

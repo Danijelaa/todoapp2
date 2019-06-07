@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Task {
@@ -13,9 +14,11 @@ public class Task {
 	@GeneratedValue
 	@Column
 	private Long id;
-	@Column
+	@Column(nullable = false)
+	@Size(min = 1, max = 50)
 	private String title;
 	@Column
+	@Size(min = 1, max = 200)
 	private String description;
 	@ManyToOne
 	private DashboardColumn dashboardColumn;

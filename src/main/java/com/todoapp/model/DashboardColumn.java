@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 
 @Entity
 public class DashboardColumn {
@@ -18,7 +19,8 @@ public class DashboardColumn {
 	@GeneratedValue
 	@Column
 	private Long id;
-	@Column
+	@Column(nullable = false)
+	@Size(min = 1, max = 50)
 	private String title;
 	@ManyToOne
 	private Dashboard dashboard;
