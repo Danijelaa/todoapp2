@@ -24,7 +24,7 @@ public class DashboardColumnServiceImpl implements DashboardColumnService{
 
 	@Override
 	public DashboardColumn findById(Long id) {
-		return dashboardColumnRepository.findById(id).orElseThrow(()-> new NotFoundException("DASHBOARD_COLUM_DOES_NOT_EXIST."));
+		return dashboardColumnRepository.findById(id).orElseThrow(()-> new NotFoundException("DASHBOARD_COLUMN_DOES_NOT_EXIST."));
 	}
 
 	@Override
