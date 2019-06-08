@@ -10,4 +10,5 @@ public interface UserService {
 	User save(User user);
 	Boolean existsByUsername(String username);
 	String findUsernameFromPrincipal(HttpServletRequest request);
+	void delete(Long id);
 }
